@@ -14,12 +14,14 @@ def text_node_to_html_node(text_node: TextNode):
         case TextType.CODE:
             return LeafNode(tag="code", value=value)
         case TextType.LINK:
-            return LeafNode(tag="a", value=value)
+            return LeafNode(tag="a", value=value, props={
+                "href": text_node.url
+            })
         case TextType.IMAGE:
             return LeafNode(tag="img", value='', props={
                 "src": text_node.url,
                 "alt": value
             })
         case _:
-            raise ValueError(f"Invalid text node. {text_node}")
+            return value
     
