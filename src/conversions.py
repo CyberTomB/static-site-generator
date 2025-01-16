@@ -49,3 +49,9 @@ def split_nodes_delimiter(old_nodes: list[TextNode], text_type):
     print(f">>>split: {final_nodes}")
     return final_nodes
         
+
+def extract_markdown_images(text):
+    images = []
+    alt_text = ''
+    url = ''
+    return alt_text, url

@@ -94,7 +94,17 @@ class TestConversions(unittest.TestCase):
         self.assertEqual(Exception, exception.__class__)
         self.assertTrue("Missing terminal demarcation" in str(exception))
 
-
+    def test_extract_markdown_images(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        # Expecting: [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), 
+        # ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+        output = extract_markdown_images(text)
+        self.assertEqual(len(output), 2)
+        self.assertEqual(output[0][0], "rick roll")
+        self.assertEqual(output[0][1], "https://i.imgur.com/aKaOqIh.gif")
+        self.assertEqual(output[1][0], "obi wan")
+        self.assertEqual(output[1][1], "https://i.imgur.com/fJRm4Vk.jpeg")
+        
 
 if __name__ == "__main__":
     unittest.main()
