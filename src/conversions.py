@@ -38,12 +38,14 @@ def split_nodes_delimiter(old_nodes: list[TextNode], text_type):
     for node in old_nodes:
         new_nodes = []
         split_text = node.text.split(DelimiterType[TextType(text_type).name].value)
+        if(not len(split_text) % 3 == 0):
+            raise Exception("Missing terminal demarcation")
         for i in range(len(split_text)):
             if not i % 2 == 0:
-                print(">>Non-even iteration")
                 new_nodes.append(TextNode(split_text[i], text_type=text_type))
             else:
                 new_nodes.append(TextNode(split_text[i], text_type="text"))
         final_nodes.extend(new_nodes)
+    print(f">>>split: {final_nodes}")
     return final_nodes
         

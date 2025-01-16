@@ -76,6 +76,25 @@ class TestConversions(unittest.TestCase):
         self.assertEqual(result[1].text_type, TextType.CODE)
         self.assertEqual(result[2].text, " markdown.")
 
+    def test_split_nodes_delimiter_code(self):
+        node = TextNode("This will have a `code` markdown.", "text")
+        result = split_nodes_delimiter([node], TextType.CODE)
+        self.assertEqual(len(result), 3)
+        self.assertIsInstance(result[0], TextNode)
+        self.assertEqual(result[0].text, "This will have a ")
+        self.assertEqual(result[1].text, "code")
+        self.assertEqual(result[1].text_type, TextType.CODE)
+        self.assertEqual(result[2].text, " markdown.")
+
+    def test_split_nodes_delimiter_missing_closing_tag_raises_error(self):
+        node = TextNode("This is missing a terminal *demarcation bottom text", "text")
+        with self.assertRaises(Exception) as cm:
+            split_nodes_delimiter([node], TextType.ITALIC)
+        exception = cm.exception
+        self.assertEqual(Exception, exception.__class__)
+        self.assertTrue("Missing terminal demarcation" in str(exception))
+
+
 
 if __name__ == "__main__":
     unittest.main()
