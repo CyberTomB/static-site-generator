@@ -56,6 +56,26 @@ class TestConversions(unittest.TestCase):
         self.assertEqual(result[1].text_type, TextType.BOLD)
         self.assertEqual(result[2].text, " markdown.")
 
+    def test_split_nodes_delimiter_italic(self):
+        node = TextNode("This will have an *italic* markdown.", "text")
+        result = split_nodes_delimiter([node], TextType.ITALIC)
+        self.assertEqual(len(result), 3)
+        self.assertIsInstance(result[0], TextNode)
+        self.assertEqual(result[0].text, "This will have an ")
+        self.assertEqual(result[1].text, "italic")
+        self.assertEqual(result[1].text_type, TextType.ITALIC)
+        self.assertEqual(result[2].text, " markdown.")
+
+    def test_split_nodes_delimiter_code(self):
+        node = TextNode("This will have a `code` markdown.", "text")
+        result = split_nodes_delimiter([node], TextType.CODE)
+        self.assertEqual(len(result), 3)
+        self.assertIsInstance(result[0], TextNode)
+        self.assertEqual(result[0].text, "This will have a ")
+        self.assertEqual(result[1].text, "code")
+        self.assertEqual(result[1].text_type, TextType.CODE)
+        self.assertEqual(result[2].text, " markdown.")
+
 
 if __name__ == "__main__":
     unittest.main()
