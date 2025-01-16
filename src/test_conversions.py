@@ -48,7 +48,7 @@ class TestConversions(unittest.TestCase):
 
     def test_split_nodes_delimiter_bold(self):
         node = TextNode("This will have a **bold** markdown.", "text")
-        result = split_nodes_delimiter([node], "**", TextType.BOLD)
+        result = split_nodes_delimiter([node], TextType.BOLD)
         self.assertEqual(len(result), 3)
         self.assertIsInstance(result[0], TextNode)
         self.assertEqual(result[0].text, "This will have a ")

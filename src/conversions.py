@@ -1,5 +1,6 @@
 from textnode import TextNode, TextType
 from leafnode import LeafNode
+from enum import Enum
 
 def text_node_to_html_node(text_node: TextNode):
 
@@ -26,11 +27,17 @@ def text_node_to_html_node(text_node: TextNode):
         case _:
             return value
 
-def split_nodes_delimiter(old_nodes: list[TextNode], delimiter, text_type):
+
+class DelimiterType(Enum):
+    BOLD = "**"
+    ITALIC = "*"
+    CODE = "`"
+
+def split_nodes_delimiter(old_nodes: list[TextNode], text_type):
     final_nodes = []
     for node in old_nodes:
         new_nodes = []
-        split_text = node.text.split(delimiter)
+        split_text = node.text.split(DelimiterType[TextType(text_type).name].value)
         for i in range(len(split_text)):
             if not i % 2 == 0:
                 print(">>Non-even iteration")
