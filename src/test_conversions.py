@@ -104,7 +104,19 @@ class TestConversions(unittest.TestCase):
         self.assertEqual(output[0][1], "https://i.imgur.com/aKaOqIh.gif")
         self.assertEqual(output[1][0], "obi wan")
         self.assertEqual(output[1][1], "https://i.imgur.com/fJRm4Vk.jpeg")
-        
+    
+    def test_extract_markdown_links(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        # [("to boot dev", "https://www.boot.dev"),
+        #  ("to youtube", "https://www.youtube.com/@bootdotdev")]
+        output = extract_markdown_links(text)
+        self.assertEqual(len(output), 2)
+        self.assertEqual(output[0][0], "to boot dev")
+        self.assertEqual(output[0][1], "https://www.boot.dev")
+        self.assertEqual(output[1][0], "to youtube")
+        self.assertEqual(output[1][1], "https://www.youtube.com/@bootdotdev")
+
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
 from textnode import TextNode, TextType
 from leafnode import LeafNode
 from enum import Enum
+from re import findall
 
 def text_node_to_html_node(text_node: TextNode):
 
@@ -51,7 +52,9 @@ def split_nodes_delimiter(old_nodes: list[TextNode], text_type):
         
 
 def extract_markdown_images(text):
-    images = []
-    alt_text = ''
-    url = ''
-    return alt_text, url
+    regex = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
+    return findall(regex, text)
+
+def extract_markdown_links(text):
+    regex = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
+    return findall(regex, text)
