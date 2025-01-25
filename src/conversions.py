@@ -51,6 +51,7 @@ def split_nodes_delimiter(old_nodes: list[TextNode], text_type):
     return final_nodes
 
 def split_nodes_image(old_nodes: list[TextNode]):
+    # This is part of a test
     pass
 
 def split_nodes_link(old_nodes: list[TextNode]):
