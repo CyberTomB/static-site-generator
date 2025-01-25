@@ -116,6 +116,13 @@ class TestConversions(unittest.TestCase):
         self.assertEqual(output[1][0], "to youtube")
         self.assertEqual(output[1][1], "https://www.youtube.com/@bootdotdev")
 
+    def test_split_nodes_link(self):
+        node = TextNode("This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+                        TextType.TEXT)
+        
+        new_nodes = split_nodes_link([node])
+        self.assertEqual(len(new_nodes), 4)
+        self.assertEqual("This is text with a link ", new_nodes[0].text)
 
 
 if __name__ == "__main__":
