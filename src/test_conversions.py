@@ -119,10 +119,34 @@ class TestConversions(unittest.TestCase):
     def test_split_nodes_link(self):
         node = TextNode("This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
                         TextType.TEXT)
+        first_expected_node = TextNode("This is text with a link ", "text")
+        second_expected_node = TextNode("to boot dev", "link", "https://www.boot.dev")
+        third_expected_node = TextNode(" and ", "text")
+        fourth_expected_node = TextNode("to youtube", "link", "https://www.youtube.com/@bootdotdev")
         
         new_nodes = split_nodes_link([node])
         self.assertEqual(len(new_nodes), 4)
-        self.assertEqual("This is text with a link ", new_nodes[0].text)
+        self.assertEqual(new_nodes[0], first_expected_node)
+        self.assertEqual(new_nodes[1], second_expected_node)
+        self.assertEqual(new_nodes[2], third_expected_node)
+        self.assertEqual(new_nodes[3], fourth_expected_node)
+
+    def test_split_nodes_image(self):
+        node = TextNode("This is a text node with an image ![alt text](image.jpg) and another image ![second alt](second_image.jpg)", TextType.TEXT)
+
+        first_expected_node = TextNode("This is a text node with an image ", "text")
+        second_expected_node = TextNode("alt text", "image", "image.jpg")
+        third_expected_node = TextNode(" and another image ", "text")
+        fourth_expected_node = TextNode("second alt", "image", "second_image.jpg")
+
+        new_nodes = split_nodes_image([node])
+        self.assertEqual(len(new_nodes), 4)
+        self.assertEqual(new_nodes[0], first_expected_node)
+        self.assertEqual(new_nodes[1], second_expected_node)
+        self.assertEqual(new_nodes[2], third_expected_node)
+        self.assertEqual(new_nodes[3], fourth_expected_node)
+
+
 
 
 if __name__ == "__main__":

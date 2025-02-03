@@ -51,8 +51,17 @@ def split_nodes_delimiter(old_nodes: list[TextNode], text_type):
     return final_nodes
 
 def split_nodes_image(old_nodes: list[TextNode]):
-    # This is part of a test
-    pass
+    final_nodes = []
+    for node in old_nodes:
+        current_text = node.text
+        links = extract_markdown_images(node.text)
+        for text, url in links:
+            splits = current_text.split(f"![{text}]({url})", 1)
+            final_nodes.append(TextNode(splits[0], TextType.TEXT))
+            current_text = splits[1]
+            final_nodes.append(TextNode(text, TextType.IMAGE, url))
+
+    return final_nodes
 
 def split_nodes_link(old_nodes: list[TextNode]):
     final_nodes = []
